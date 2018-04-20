@@ -82,11 +82,11 @@ public class HonestProfilerControl extends SingleIterationProfilerController {
     }
 
     private void sanitizeFlameGraphTxtFile(final File txtFile, final File sanitizedTxtFile) {
-        new FlameGraphSanitizer(FlameGraphSanitizer.DEFAULT_SANITIZE_FUNCTION).sanitize(txtFile, sanitizedTxtFile);
+        new FlameGraphSanitizer(FlameGraphSanitizer.SanitizeFunction.COLLAPSE_BUILD_SCRIPTS).sanitize(txtFile, sanitizedTxtFile);
     }
 
-    private void generateFlameGraph(final File sanitizedTxtFile, final File fgFile) throws IOException, InterruptedException {
-        new FlameGraphGenerator(args.getFgHomeDir()).generateFlameGraph(sanitizedTxtFile, fgFile);
+    private void generateFlameGraph(final File sanitizedTxtFile, final File fgFile) {
+        new FlameGraphGenerator().generateFlameGraph(sanitizedTxtFile, fgFile, "--minwdith", "1");
     }
 
     private void sendCommand(String command) throws IOException {

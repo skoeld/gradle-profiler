@@ -15,6 +15,7 @@
  */
 package org.gradle.profiler.perf;
 
+import com.google.common.collect.Lists;
 import org.apache.ant.compress.taskdefs.Unzip;
 import org.apache.tools.ant.types.mappers.CutDirsMapper;
 import org.gradle.profiler.CommandExec;
@@ -207,7 +208,7 @@ public class PerfProfilerController extends SingleIterationProfilerController {
 
         sanitizeFlameGraphFile(new IdleCpuSanitizeFunction(), foldedFile, foldedNoIdleFile);
         sanitizeFlameGraphFile(new JavaProcessSanitizeFunction(), foldedNoIdleFile, foldedJavaFile);
-        sanitizeFlameGraphFile(FlameGraphSanitizer.DEFAULT_SANITIZE_FUNCTION, foldedJavaFile, sanitizedFile);
+        sanitizeFlameGraphFile(FlameGraphSanitizer.SanitizeFunction.COLLAPSE_BUILD_SCRIPTS, foldedJavaFile, sanitizedFile);
         generateFlameGraph(sanitizedFile, fgFile, false);
         generateFlameGraph(sanitizedFile, icicleFile, true);
     }
@@ -234,7 +235,12 @@ public class PerfProfilerController extends SingleIterationProfilerController {
     }
 
     private void generateFlameGraph(final File sanitizedTxtFile, final File fgFile, boolean icicle) throws IOException, InterruptedException {
-        new FlameGraphGenerator(getToolDir(TOOL_FLAMEGRAPH)).generateFlameGraph(sanitizedTxtFile, fgFile, icicle, "--color=java", "--hash");
+        List<String> args = Lists.newArrayList("--color=java", "--hash", "--minwidth", "1");
+        if (icicle) {
+            args.add("--invert");
+            args.add("--reverse");
+        }
+        new FlameGraphGenerator().generateFlameGraph(sanitizedTxtFile, fgFile, args);
     }
 
     private File getToolsDir() {
