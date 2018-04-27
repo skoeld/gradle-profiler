@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 public class BazelScenarioDefinition extends ScenarioDefinition {
     private final List<String> targets;
     private final List<String> commands;
-    private final BazelVersion version;
+    private final Version version;
 
-    public BazelScenarioDefinition(String scenarioName, BazelVersion version, List<String> targets, List<String> commands, Supplier<BuildMutator> buildMutator, int warmUpCount, int buildCount, File outputDir) {
+    public BazelScenarioDefinition(String scenarioName, Version version, List<String> targets, List<String> commands, Supplier<BuildMutator> buildMutator, int warmUpCount, int buildCount, File outputDir) {
         super(scenarioName, buildMutator, warmUpCount, buildCount, outputDir);
         this.version = version;
         this.targets = targets;

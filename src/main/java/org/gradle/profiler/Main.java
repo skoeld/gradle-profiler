@@ -51,8 +51,7 @@ public class Main {
 
             DaemonControl daemonControl = new DaemonControl(settings.getGradleUserHome());
             GradleVersionInspector gradleVersionInspector = new DefaultGradleVersionInspector(settings.getProjectDir(), settings.getGradleUserHome(), daemonControl);
-            BazelVersionInspector bazelVersionInspector = new BazelVersionInspector();
-            ScenarioLoader scenarioLoader = new ScenarioLoader(gradleVersionInspector, bazelVersionInspector);
+            ScenarioLoader scenarioLoader = new ScenarioLoader(gradleVersionInspector, VersionInspector.BAZEL, VersionInspector.BUCK);
             List<ScenarioDefinition> scenarios = scenarioLoader.loadScenarios(settings);
             int totalScenarios = scenarios.size();
 
