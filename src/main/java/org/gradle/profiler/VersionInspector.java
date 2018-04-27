@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 public class VersionInspector {
 
     public final static VersionInspector BAZEL = new VersionInspector("bazel", "bazel", "Build label: (.+)", "bazel version");
-    public final static VersionInspector BUCK = new VersionInspector("buck", "buck", "buck version v(.+)", "buck", "--version");
+    public final static VersionInspector BUCK = new VersionInspector("buck", "buck", "buck version (.+)", "./buckw", "--version");
 
     private Version cachedVersion;
     private final String name;
