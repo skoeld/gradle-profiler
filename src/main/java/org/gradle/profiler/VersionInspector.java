@@ -8,7 +8,10 @@ import java.util.regex.Pattern;
 
 public class VersionInspector {
 
-    public final static VersionInspector BAZEL = new VersionInspector("bazel", "bazel", "Build label: (.+)", "bazel version");
+    private final static String bazelHome = System.getenv("BAZEL_HOME");
+    private final static String bazelExe = bazelHome == null ? "bazel" : bazelHome + "/bin/bazel";
+
+    public final static VersionInspector BAZEL = new VersionInspector("bazel", "bazel", "Build label: (.+)", bazelExe + " version");
     public final static VersionInspector BUCK = new VersionInspector("buck", "buck", "buck version (.+)", "./buckw", "--version");
 
     private Version cachedVersion;
