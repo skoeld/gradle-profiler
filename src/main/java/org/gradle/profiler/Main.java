@@ -429,7 +429,6 @@ public class Main {
            t= tryRun(action, after);
         } catch (Exception e) {
             e.printStackTrace();
-            // continue
         }
         return t;
     }
