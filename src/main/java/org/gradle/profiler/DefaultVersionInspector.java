@@ -11,7 +11,7 @@ public class DefaultVersionInspector implements VersionInspector {
     private final static String bazelHome = ProfilerIntegrationTest.groovy;
     private final static String bazelExe = bazelHome == null ? "bazel" : bazelHome + "/bin/bazel";
 
-    public final static VersionInspector BAZEL = new DefaultVersionInspector("bazel", "bazel", "Build label: (.+)", bazelExe + " version");
+    public final static VersionInspector BAZEL = new DefaultVersionInspector("bazel", "bazel", "Build label: (.+)", bazelExe, " version");
     public final static VersionInspector BUCK = new DefaultVersionInspector("buck", "buck", "buck version (.+)", "./buckw", "--version");
 
     private Version cachedVersion;
