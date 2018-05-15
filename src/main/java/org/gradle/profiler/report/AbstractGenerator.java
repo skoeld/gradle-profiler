@@ -14,6 +14,10 @@ public abstract class AbstractGenerator {
         this.outputFile = outputFile;
     }
 
+    public File getOutputFile() {
+        return outputFile;
+    }
+
     public void write(BenchmarkResult result) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
             write(result, writer);

@@ -37,7 +37,12 @@ public class GradleScenarioDefinition extends ScenarioDefinition {
     }
 
     @Override
-    public String getBuildToolDisplayName() {
+    public String getBuildTool() {
+        return "Gradle";
+    }
+
+    @Override
+    public String getBuildToolVersion() {
         return version.getVersion();
     }
 
