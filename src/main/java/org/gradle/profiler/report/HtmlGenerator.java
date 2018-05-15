@@ -17,7 +17,6 @@ import java.util.function.Function;
 public class HtmlGenerator extends AbstractGenerator {
     private final NumberFormat numberFormat = new DecimalFormat("0.00");
     private final NumberFormat diffFormat = new DecimalFormat("+0.00;-0.00");
-    private final String hostname = Hostname.getHostname();
 
     public HtmlGenerator(File outputFile) {
         super(outputFile);
@@ -25,6 +24,13 @@ public class HtmlGenerator extends AbstractGenerator {
 
     @Override
     protected void write(BenchmarkResult benchmarkResult, BufferedWriter writer) throws IOException {
+        String hostname = "";
+        try {
+            hostname = Hostname.getHostname();
+        } catch (RuntimeException e) {
+            System.err.println("Error obtaining hostname: " + e.getLocalizedMessage());
+        }
+
         writer.write("<!DOCTYPE html>\n");
         writer.write("<html>\n");
         writer.write("<head>\n");

@@ -1,6 +1,7 @@
 package org.gradle.profiler.report;
 
 import com.kstruct.gethostname4j.Hostname;
+import com.sun.xml.internal.ws.server.ServerRtException;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.gradle.profiler.BenchmarkResult;
 import org.gradle.profiler.BuildInvocationResult;
@@ -14,7 +15,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class CsvGenerator extends AbstractGenerator {
-    private final String hostname = Hostname.getHostname();
 
     public CsvGenerator(File outputFile) {
         super(outputFile);
@@ -22,6 +22,12 @@ public class CsvGenerator extends AbstractGenerator {
 
     @Override
     protected void write(BenchmarkResult benchmarkResult, BufferedWriter writer) throws IOException {
+        String hostname = "";
+        try {
+            hostname = Hostname.getHostname();
+        } catch (RuntimeException e) {
+            System.err.println("Error obtaining hostname: " + e.getLocalizedMessage());
+        }
         List<? extends BuildScenarioResult> allScenarios = benchmarkResult.getScenarios();
         writer.write("scenario");
         for (BuildScenarioResult result : allScenarios) {
