@@ -1,7 +1,6 @@
 package org.gradle.profiler.report;
 
 import com.kstruct.gethostname4j.Hostname;
-import com.sun.xml.internal.ws.server.ServerRtException;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.gradle.profiler.BenchmarkResult;
 import org.gradle.profiler.BuildInvocationResult;
