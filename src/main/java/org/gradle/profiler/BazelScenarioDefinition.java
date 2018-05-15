@@ -29,7 +29,12 @@ public class BazelScenarioDefinition extends ScenarioDefinition {
     }
 
     @Override
-    public String getBuildToolDisplayName() {
+    public String getBuildTool() {
+        return "Bazel";
+    }
+
+    @Override
+    public String getBuildToolVersion() {
         return version.getVersion();
     }
 

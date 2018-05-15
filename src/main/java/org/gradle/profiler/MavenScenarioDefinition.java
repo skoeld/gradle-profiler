@@ -25,8 +25,13 @@ public class MavenScenarioDefinition extends ScenarioDefinition {
     }
 
     @Override
-    public String getBuildToolDisplayName() {
-        return "maven";
+    public String getBuildTool() {
+        return "Maven";
+    }
+
+    @Override
+    public String getBuildToolVersion() {
+        return "";
     }
 
     @Override

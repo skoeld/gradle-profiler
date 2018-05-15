@@ -29,10 +29,17 @@ public abstract class ScenarioDefinition {
      */
     public abstract String getProfileName();
 
+
     /**
-     * A human consumable description of the build tool that runs this scenario.
+     * A human consumable description of the build tool name only that runs this scenario.
      */
-    public abstract String getBuildToolDisplayName();
+    public abstract String getBuildTool();
+
+
+    /**
+     * A human consumable description of the build tool that runs this scenario with additional version info if available.
+     */
+    public abstract String getBuildToolVersion();
 
     /**
      * A human consumable description of the 'tasks' that are run for this scenario (may not be Gradle tasks).

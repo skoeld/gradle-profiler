@@ -1,5 +1,6 @@
 package org.gradle.profiler.report;
 
+import com.kstruct.gethostname4j.Hostname;
 import org.gradle.profiler.BenchmarkResult;
 import org.gradle.profiler.BuildInvocationResult;
 import org.gradle.profiler.BuildScenarioResult;
@@ -16,6 +17,7 @@ import java.util.function.Function;
 public class HtmlGenerator extends AbstractGenerator {
     private final NumberFormat numberFormat = new DecimalFormat("0.00");
     private final NumberFormat diffFormat = new DecimalFormat("+0.00;-0.00");
+    private final String hostname = Hostname.getHostname();
 
     public HtmlGenerator(File outputFile) {
         super(outputFile);
@@ -57,10 +59,31 @@ public class HtmlGenerator extends AbstractGenerator {
             writer.write("</td>");
         }
         writer.write("</tr>\n");
+        writer.write("<tr><td>Build Tool</td>");
+        for (BuildScenarioResult scenario : allScenarios) {
+            writer.write("<td>");
+            writer.write(scenario.getScenarioDefinition().getBuildTool());
+            writer.write("</td>");
+        }
+        writer.write("</tr>\n");
         writer.write("<tr><td>Version</td>");
         for (BuildScenarioResult scenario : allScenarios) {
             writer.write("<td>");
-            writer.write(scenario.getScenarioDefinition().getBuildToolDisplayName());
+            writer.write(scenario.getScenarioDefinition().getBuildToolVersion());
+            writer.write("</td>");
+        }
+        writer.write("</tr>\n");
+        writer.write("<tr><td>Hostname</td>");
+        for (int i = 0; i < allScenarios.size(); i++) {
+            writer.write("<td>");
+            writer.write(hostname);
+            writer.write("</td>");
+        }
+        writer.write("</tr>\n");
+        writer.write("<tr><td>Source</td>");
+        for (int i = 0; i < allScenarios.size(); i++) {
+            writer.write("<td>");
+            writer.write(getOutputFile().getCanonicalPath());
             writer.write("</td>");
         }
         writer.write("</tr>\n");
@@ -134,7 +157,7 @@ public class HtmlGenerator extends AbstractGenerator {
             writer.write("            label: '");
             writer.write(scenario.getScenarioDefinition().getName());
             writer.write(" ");
-            writer.write(scenario.getScenarioDefinition().getBuildToolDisplayName());
+            writer.write(scenario.getScenarioDefinition().getBuildToolVersion());
             writer.write("',\n");
             writer.write("            showLine: false,\n");
             writer.write("            fill: false,\n");

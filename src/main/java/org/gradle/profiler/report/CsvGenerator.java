@@ -1,5 +1,6 @@
 package org.gradle.profiler.report;
 
+import com.kstruct.gethostname4j.Hostname;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.gradle.profiler.BenchmarkResult;
 import org.gradle.profiler.BuildInvocationResult;
@@ -13,6 +14,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class CsvGenerator extends AbstractGenerator {
+    private final String hostname = Hostname.getHostname();
+
     public CsvGenerator(File outputFile) {
         super(outputFile);
     }
@@ -26,10 +29,28 @@ public class CsvGenerator extends AbstractGenerator {
             writer.write(result.getScenarioDefinition().getName());
         }
         writer.newLine();
+        writer.write("build tool");
+        for (BuildScenarioResult result : allScenarios) {
+            writer.write(",");
+            writer.write(result.getScenarioDefinition().getBuildTool());
+        }
+        writer.newLine();
         writer.write("version");
         for (BuildScenarioResult result : allScenarios) {
             writer.write(",");
-            writer.write(result.getScenarioDefinition().getBuildToolDisplayName());
+            writer.write(result.getScenarioDefinition().getBuildToolVersion());
+        }
+        writer.newLine();
+        writer.write("hostname");
+        for (int i = 0; i < allScenarios.size(); i++) {
+            writer.write(",");
+            writer.write(hostname);
+        }
+        writer.newLine();
+        writer.write("source");
+        for (int i = 0; i < allScenarios.size(); i++) {
+            writer.write(",");
+            writer.write(getOutputFile().getCanonicalPath());
         }
         writer.newLine();
         writer.write("tasks");
