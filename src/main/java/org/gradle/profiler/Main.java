@@ -176,7 +176,6 @@ public class Main {
 
 			BuildInvocationResult results = null;
             String pid = null;
-
 			for (int i = 1; i <= scenario.getWarmUpCount(); i++) {
 				final int counter = i;
 				beforeBuild(WARM_UP, counter, invoker, cleanupTasks, mutator);
@@ -236,6 +235,9 @@ public class Main {
 
 					return result;
 				}, mutator::afterBuild);
+				if (pid == null && results != null) {
+				    pid = results.getDaemonPid();
+                }
             }
 
             if (settings.isProfile()) {
